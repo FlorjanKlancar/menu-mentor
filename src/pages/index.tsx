@@ -40,7 +40,7 @@ export default function Home() {
     }
   };
 
-  if (!user) return <div></div>;
+  if (!user) return <div className="h-screen"></div>;
 
   const generateAIResponse = async (prompt: string) => {
     try {
