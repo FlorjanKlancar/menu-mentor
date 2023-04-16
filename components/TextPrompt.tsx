@@ -1,4 +1,3 @@
-import { useUser } from "@clerk/nextjs";
 import React, { type Dispatch, type SetStateAction, useState } from "react";
 import { type MessageType } from "types/MessageType";
 
@@ -9,16 +8,8 @@ type Props = {
   loading: boolean;
 };
 
-function TextPrompt({
-  messages,
-  setMessages,
-  generateAIResponse,
-  loading,
-}: Props) {
+function TextPrompt({ generateAIResponse, loading }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useUser();
-
-  if (!user) return <div></div>;
 
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -26,16 +17,6 @@ function TextPrompt({
     if (!searchQuery.length) return;
 
     setSearchQuery("");
-    setMessages([
-      ...messages,
-      {
-        messageOwner:
-          user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Username",
-        message: searchQuery,
-        isLoading: false,
-      },
-      { messageOwner: "Chat Bot", message: "", isLoading: true },
-    ]);
 
     generateAIResponse(searchQuery);
   };
