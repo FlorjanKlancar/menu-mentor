@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/nextjs";
 import ChatBubble from "components/ChatBubble";
 import TextPrompt from "components/TextPrompt";
 import { useEffect, useRef, useState } from "react";
@@ -8,10 +9,54 @@ export default function Home() {
   const [botResponse, setBotResponse] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
+  const { user } = useUser();
+
   const chatRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!botResponse.length) return;
+
+    const cleanup = transformMessage(botResponse);
+
+    return cleanup;
+  }, [botResponse]);
+
+  const transformMessage = (chunkValue: string) => {
+    if (!messages.length) return;
+
+    const getLastMessage = messages.pop();
+
+    if (!getLastMessage) return;
+
+    getLastMessage.isLoading = false;
+    getLastMessage.message = chunkValue;
+
+    setMessages([...messages, getLastMessage]);
+  };
+
+  const scrollToChat = () => {
+    if (chatRef.current !== null) {
+      chatRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  if (!user) return <div></div>;
 
   const generateAIResponse = async (prompt: string) => {
     try {
+      setMessages([
+        ...messages,
+        {
+          messageOwner:
+            user.fullName ??
+            user.primaryEmailAddress?.emailAddress ??
+            "Username",
+          message: prompt,
+          isLoading: false,
+        },
+        { messageOwner: "Chat Bot", message: "", isLoading: true },
+      ]);
+
       setLoading(true);
       const response = await fetch("/api/openai", {
         method: "POST",
@@ -53,33 +98,6 @@ export default function Home() {
         setBotResponse(e.message);
         setLoading(false);
       }
-    }
-  };
-
-  useEffect(() => {
-    if (!botResponse.length) return;
-
-    const cleanup = transformMessage(botResponse);
-
-    return cleanup;
-  }, [botResponse]);
-
-  const transformMessage = (chunkValue: string) => {
-    if (!messages.length) return;
-
-    const getLastMessage = messages.pop();
-
-    if (!getLastMessage) return;
-
-    getLastMessage.isLoading = false;
-    getLastMessage.message = chunkValue;
-
-    setMessages([...messages, getLastMessage]);
-  };
-
-  const scrollToChat = () => {
-    if (chatRef.current !== null) {
-      chatRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
