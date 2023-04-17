@@ -105,9 +105,7 @@ function RenderMenuList() {
         <Link key={item.title} href={item.path}>
           <button
             className={`btn-ghost btn w-full items-center justify-start gap-2 active:bg-primary active:text-slate-800 lg:justify-center ${
-              checkIfActivePath(item.path)
-                ? "border-l-2 text-primary"
-                : "text-slate-600"
+              checkIfActivePath(item.path) ? "text-primary" : "text-slate-600"
             }`}
           >
             {item.icon}
