@@ -104,15 +104,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-142px)] flex-col space-y-8">
-      <h2 className="flex items-center py-8 text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:py-4 sm:text-4xl sm:tracking-tight">
+    <div className="flex h-[calc(100vh-142px)] flex-col space-y-4">
+      <h2 className="flex items-center border-slate-400 border-opacity-30 text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:border-b-2 sm:py-4 sm:text-4xl sm:tracking-tight">
         Chat with a Nutrition Specialist &#127791;
       </h2>
 
       {!messages.length ? (
         <NoMessagesPlaceholder />
       ) : (
-        <div className="h-[calc(100%-360px)] overflow-y-auto sm:h-[calc(100%-400px)]">
+        <div className="h-[calc(100%-270px)] overflow-y-auto sm:h-[calc(100%-375px)]">
           {messages.map((message, i) => (
             <ChatBubble {...message} key={i} />
           ))}

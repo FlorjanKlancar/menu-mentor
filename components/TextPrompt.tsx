@@ -24,7 +24,7 @@ function TextPrompt({ generateAIResponse, loading }: Props) {
   return (
     <form
       onSubmit={submitHandler}
-      className="glass flex flex-col space-y-5 rounded-lg border-b border-gray-200 px-4 py-5 sm:px-6"
+      className="glass flex flex-col space-y-5 rounded-lg px-4 py-5 sm:px-6"
     >
       <div className="flex flex-wrap items-center justify-between sm:flex-nowrap">
         <h3 className="text-base font-semibold leading-6 text-gray-900">

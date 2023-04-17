@@ -3,6 +3,13 @@ import { useScrollPosition } from "hooks/useScrollPosition";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import {
+  HomeIcon,
+  ArchiveBoxIcon,
+  ChatBubbleLeftRightIcon,
+  Bars3BottomLeftIcon,
+} from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 
 function Navbar() {
   const navigationBackground = useScrollPosition();
@@ -13,18 +20,45 @@ function Navbar() {
         navigationBackground ? "bg-white/70 shadow-sm backdrop-blur " : ""
       }`}
     >
-      <div className="flex-1 space-x-1">
+      <div className="navbar-start lg:hidden">
+        <div className="dropdown">
+          <label tabIndex={0} className="btn-ghost btn-circle btn">
+            <Bars3BottomLeftIcon className="h-6 w-6" />
+          </label>
+          <ul
+            className="dropdown-content  menu rounded-box  menu-compact mt-3 w-48 bg-base-100 p-2 shadow"
+            tabIndex={0}
+          >
+            <RenderMenuList />
+          </ul>
+        </div>
+      </div>
+
+      <div className="hidden space-x-2 lg:navbar-start lg:flex ">
         <div className="relative h-12 w-12">
           <Image src={"/logo.png"} fill alt="Logo img" />
         </div>
         <Link
           href="/"
-          className="btn-ghost btn text-xl normal-case text-primary"
+          className="btn-ghost btn text-base normal-case text-primary lg:text-xl"
         >
           Menu Mentor
         </Link>
       </div>
-      <div className="flex-none ">
+
+      <div className="navbar-center lg:hidden">
+        <div className="relative h-12 w-12">
+          <Image src={"/logo.png"} fill alt="Logo img" />
+        </div>
+      </div>
+
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal space-x-3 px-1">
+          <RenderMenuList />
+        </ul>
+      </div>
+
+      <div className="navbar-end">
         <UserButton
           appearance={{
             elements: {
@@ -40,3 +74,47 @@ function Navbar() {
 }
 
 export default Navbar;
+
+function RenderMenuList() {
+  const router = useRouter();
+
+  const menu = [
+    {
+      title: "Home",
+      icon: <HomeIcon className="h-6 w-6" />,
+      path: "/",
+    },
+    {
+      title: "Receipts",
+      icon: <ArchiveBoxIcon className="h-6 w-6" />,
+      path: "/receipts",
+    },
+    {
+      title: "Chat history",
+      icon: <ChatBubbleLeftRightIcon className="h-6 w-6" />,
+      path: "/chat-history",
+    },
+  ];
+
+  const checkIfActivePath = (path: string) =>
+    path === router.asPath ? true : false;
+
+  return (
+    <>
+      {menu.map((item) => (
+        <Link key={item.title} href={item.path}>
+          <button
+            className={`btn-ghost btn w-full items-center justify-start gap-2 active:bg-primary active:text-slate-800 lg:justify-center ${
+              checkIfActivePath(item.path)
+                ? "border-l-2 text-primary"
+                : "text-slate-600"
+            }`}
+          >
+            {item.icon}
+            {item.title}
+          </button>
+        </Link>
+      ))}
+    </>
+  );
+}
