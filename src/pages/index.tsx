@@ -3,6 +3,7 @@ import ChatBubble from "components/ChatBubble";
 import Footer from "components/Footer";
 import NoMessagesPlaceholder from "components/NoMessagesPlaceholder";
 import TextPrompt from "components/TextPrompt";
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { type MessageType } from "types/MessageType";
 
@@ -32,6 +33,7 @@ export default function Home() {
 
     getLastMessage.isLoading = false;
     getLastMessage.message = chunkValue;
+    getLastMessage.time = dayjs().format("HH:mm");
 
     setMessages([...messages, getLastMessage]);
   };
@@ -55,6 +57,7 @@ export default function Home() {
             "Username",
           message: prompt,
           isLoading: false,
+          time: dayjs().format("HH:mm"),
         },
         { messageOwner: "Chat Bot", message: "", isLoading: true },
       ]);
