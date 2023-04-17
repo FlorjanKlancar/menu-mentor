@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer>
-      <div className="mx-auto max-w-7xl overflow-hidden py-8">
+      <div className="mx-auto hidden max-w-7xl overflow-hidden py-3 sm:block">
         <div className="flex justify-center space-x-10">
           <a className="text-gray-400 hover:text-gray-500">
             <span className="sr-only">Github</span>

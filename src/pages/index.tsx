@@ -1,5 +1,7 @@
 import { useUser } from "@clerk/nextjs";
 import ChatBubble from "components/ChatBubble";
+import Footer from "components/Footer";
+import NoMessagesPlaceholder from "components/NoMessagesPlaceholder";
 import TextPrompt from "components/TextPrompt";
 import { useEffect, useRef, useState } from "react";
 import { type MessageType } from "types/MessageType";
@@ -102,24 +104,32 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen flex-col space-y-8">
+    <div className="flex h-[calc(100vh-142px)] flex-col space-y-8">
       <h2 className="flex items-center py-8 text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:py-4 sm:text-4xl sm:tracking-tight">
         Chat with a Nutrition Specialist &#127791;
       </h2>
 
-      <TextPrompt
-        messages={messages}
-        setMessages={setMessages}
-        generateAIResponse={generateAIResponse}
-        loading={loading}
-      />
+      {!messages.length ? (
+        <NoMessagesPlaceholder />
+      ) : (
+        <div className="h-[calc(100%-360px)] overflow-y-auto sm:h-[calc(100%-400px)]">
+          {messages.map((message, i) => (
+            <ChatBubble {...message} key={i} />
+          ))}
+          <div ref={chatRef} />
+        </div>
+      )}
 
-      <div className="min-h-[calc(100vh-500px)]">
-        {messages.map((message, i) => (
-          <ChatBubble {...message} key={i} />
-        ))}
+      <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-7xl sm:px-6 sm:py-3">
+        <TextPrompt
+          messages={messages}
+          setMessages={setMessages}
+          generateAIResponse={generateAIResponse}
+          loading={loading}
+        />
+
+        <Footer />
       </div>
-      <div ref={chatRef} />
     </div>
   );
 }
