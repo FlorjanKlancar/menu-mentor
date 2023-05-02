@@ -1,6 +1,6 @@
 import { getAuth } from "@clerk/nextjs/server";
 import { type NextRequest } from "next/server";
-import { OpenAIStream, type OpenAIStreamPayload } from "~/utils/OpenAIStream";
+import { OpenAIStream, type OpenAIStreamPayload } from "lib/OpenAIStream";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");

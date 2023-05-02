@@ -1,10 +1,11 @@
 import { type AppType } from "next/app";
 import { ClerkProvider } from "@clerk/nextjs";
-import { api } from "~/utils/api";
+import { api } from "lib/api";
 
 import "~/styles/globals.css";
 import Head from "next/head";
-import MainLayout from "components/layout/MainLayout";
+import AppLayout from "components/layout/AppLayout";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -13,9 +14,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <title>Menu Mentor</title>
       </Head>
       <ClerkProvider {...pageProps}>
-        <MainLayout>
+        <AppLayout>
           <Component {...pageProps} />
-        </MainLayout>
+        </AppLayout>
+        <Toaster position="bottom-center" />
       </ClerkProvider>
     </>
   );

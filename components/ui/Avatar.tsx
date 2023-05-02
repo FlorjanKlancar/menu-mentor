@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import React from "react";
-import AvatarImageSkeleton from "./skeletons/AvatarImageSkeleton";
+import AvatarImageSkeleton from "../skeletons/AvatarImageSkeleton";
 
 type Props = {
   messageOwner: string;

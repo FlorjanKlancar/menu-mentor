@@ -1,11 +1,6 @@
-import Footer from "components/Footer";
 import Navbar from "components/Navbar";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative isolate bg-slate-200">
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
