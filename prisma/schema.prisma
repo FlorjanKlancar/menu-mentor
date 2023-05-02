@@ -13,6 +13,7 @@ datasource db {
 model Receipts {
     id        String   @id @default(cuid())
     receipt   String   @db.LongText()
+    title     String? 
     userId    String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
