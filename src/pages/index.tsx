@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/nextjs";
 import ChatBubble from "components/ChatBubble";
 import Footer from "components/Footer";
-import NoMessagesPlaceholder from "components/NoMessagesPlaceholder";
+import NoMessages from "components/placeholders/NoMessages";
 import TextPrompt from "components/TextPrompt";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
@@ -113,7 +113,7 @@ export default function Home() {
       </h2>
 
       {!messages.length ? (
-        <NoMessagesPlaceholder />
+        <NoMessages />
       ) : (
         <div className="max-h-[calc(100%-270px)] overflow-y-auto sm:h-[calc(100%-375px)]">
           {messages.map((message, i) => (
