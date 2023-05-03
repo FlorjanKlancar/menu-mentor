@@ -26,10 +26,11 @@ function ReceiptsPage() {
     data: receipts,
     isLoading,
     isError,
+    error,
   } = api.receipt.getAllReceipts.useQuery();
 
   if (isLoading || !receipts) return <ReceiptListSkeleton numberOfCards={8} />;
-  if (isError) return <div>smt went wrong</div>;
+  if (error || isError) return <div>smt went wrong</div>;
 
   const formatDescription = (receiptLongString: string) => {
     const description = receiptLongString.split("\n")[0];
