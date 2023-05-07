@@ -1,10 +1,10 @@
 import { api } from "lib/api";
 import React, { useState } from "react";
-import { BookmarkIcon } from "@heroicons/react/20/solid";
 import dayjs from "dayjs";
 import {
   ChevronRightIcon,
   ExclamationTriangleIcon,
+  SunIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import { toast } from "react-hot-toast";
 import Image from "next/image";
 import ReceiptListSkeleton from "components/skeletons/ReceiptListSkeleton";
 import NoReceipts from "components/placeholders/NoReceipts";
+import { formatDescription } from "lib/utils";
 
 function ReceiptsGrid() {
   const [open, setOpen] = useState(false);
@@ -27,18 +28,33 @@ function ReceiptsGrid() {
     error,
   } = api.receipt.getAllReceipts.useQuery();
 
+  const utils = api.useContext();
+
+  const removeReceiptMutation = api.receipt.removeReceipt.useMutation();
+
+  const removeHandler = async (receiptId: string) => {
+    setOpen(false);
+
+    try {
+      await removeReceiptMutation.mutate(
+        { receiptId },
+        {
+          onSuccess() {
+            utils.receipt.invalidate();
+            toast.success("Successfully removed receipt!");
+          },
+          onError(e) {
+            toast.error(e.message);
+          },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   if (error || isError) return <div>smt went wrong</div>;
   if (isLoading || !receipts) return <ReceiptListSkeleton numberOfCards={8} />;
-
-  const formatDescription = (receiptLongString: string) => {
-    const description = receiptLongString.split("\n")[0];
-    if (!description) return;
-
-    if (description.toLocaleLowerCase().includes("sure,"))
-      return description.slice(5, -1);
-
-    return description.slice(0, -1);
-  };
 
   return (
     <>
@@ -59,16 +75,23 @@ function ReceiptsGrid() {
                   alt={"Icon Image"}
                 />
               </div>
-              <h3 className="mt-6 text-sm font-medium text-gray-900">
-                placeholder
-              </h3>
+              <div className="h-12">
+                {receipt.title ? (
+                  <h3 className="mt-6 text-sm font-medium text-gray-900">
+                    {receipt.title}
+                  </h3>
+                ) : null}
+              </div>
               {formatDescription(receipt.receipt)}
               <div>
-                <Badge className="mt-3">
-                  <BookmarkIcon className="mr-1 h-5 w-5 text-secondary" />
-                  {dayjs(receipt.createdAt).format("DD. MM. YYYY")}
+                <Badge className="my-2" variant={"default"}>
+                  <SunIcon className="mr-1 h-5 w-5" />
+                  {receipt.type}
                 </Badge>
               </div>
+              <p className=" text-sm text-slate-400">
+                {dayjs(receipt.createdAt).format("DD. MM. YYYY")}
+              </p>
             </div>
             <div>
               <div className="-mt-px flex divide-x divide-gray-200">
@@ -106,19 +129,24 @@ function ReceiptsGrid() {
         modalTitle={"Delete the selected receipt?"}
         modalIcon={<ModalIcon />}
         modalButton={
-          <ModalButton
-            receiptId={selectedReceipt ? selectedReceipt.id : ""}
-            setOpen={setOpen}
-          />
+          <button
+            type="button"
+            onClick={() => removeHandler(selectedReceipt!.id)}
+            className="ml-1 mt-3 inline-flex w-full justify-center rounded-md bg-red-200 px-3 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50 sm:mt-0 sm:w-auto"
+          >
+            Delete
+          </button>
         }
         open={open}
         setOpen={setOpen}
       >
         {selectedReceipt && (
-          <div>
-            <p>Do you really want to remove the following receipt?</p>
-            <p className="text-sm font-semibold text-primary underline decoration-primary underline-offset-4">
-              {formatDescription(selectedReceipt.receipt)}
+          <div className="text-sm text-gray-500">
+            <p>
+              Do you really want to remove the following receipt? <br />
+              <span className="text-sm font-semibold text-primary underline decoration-primary underline-offset-4">
+                {formatDescription(selectedReceipt.receipt)}
+              </span>
             </p>
           </div>
         )}
@@ -137,42 +165,5 @@ const ModalIcon = () => {
         aria-hidden="true"
       />
     </div>
-  );
-};
-
-type Props = {
-  receiptId: string;
-  setOpen: (open: boolean) => void;
-};
-
-const ModalButton = ({ receiptId, setOpen }: Props) => {
-  const utils = api.useContext();
-
-  const removeReceiptMutation = api.receipt.removeReceipt.useMutation();
-
-  const removeHandler = async (receiptId: string) => {
-    setOpen(false);
-    toast.success("Successfully removed receipt!");
-    await removeReceiptMutation.mutate(
-      { receiptId },
-      {
-        onSuccess() {
-          utils.receipt.invalidate();
-        },
-        onError(e) {
-          toast.error(e.message);
-        },
-      }
-    );
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={() => removeHandler(receiptId)}
-      className="ml-1 mt-3 inline-flex w-full justify-center rounded-md bg-red-200 px-3 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50 sm:mt-0 sm:w-auto"
-    >
-      Delete
-    </button>
   );
 };

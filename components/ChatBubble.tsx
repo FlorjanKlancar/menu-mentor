@@ -14,6 +14,7 @@ import { Badge } from "./ui/Badge";
 
 interface Props extends MessageType {
   generateAIResponse: (prompt: string) => void;
+  isGenerating: boolean;
 }
 
 function ChatBubble({
@@ -22,6 +23,7 @@ function ChatBubble({
   isLoading,
   time,
   generateAIResponse,
+  isGenerating,
 }: Props) {
   const receiptMutation = api.receipt.saveReceipt.useMutation();
 
@@ -59,7 +61,7 @@ function ChatBubble({
 
         <div className="chat-footer mt-2">
           {!receiptMutation.isSuccess ? (
-            messageOwner === "Chat Bot" && isReceipt ? (
+            messageOwner === "Chat Bot" && isReceipt && !isGenerating ? (
               <div className="flex flex-col space-y-2 text-sm sm:flex-row sm:space-x-2 sm:space-y-0">
                 <Badge
                   variant={"success"}

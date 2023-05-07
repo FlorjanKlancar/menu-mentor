@@ -28,18 +28,25 @@ export default async function handler(req: NextRequest) {
     messages: [
       {
         role: "system",
-        content: `You are a professional nutrition specialist suggesting users with perfectly balanced meals. 
-          Respond in short and straight receipts. 
-          Make sure to format your output messages in a readable way for example name of the day, name of the dish, ingredients first then receipt. Separate sections with 
-          <h2 className="text-xl italic font-semibold text-gray-200">Ingredients:</h2>
-        <ul className="pl-5 list-disc"><li>vegetable broth and beef broth in place of chicken broth</li>
-        <li> green onions in place of carrots</li>
-        <li>potatoes in place of tomatoes</li>
-        <li>green onions in place of celery</li></ul>
-        
-        <h2 className="text-xl italic font-semibold text-gray-200">Process</h2>
+        content: `You are a professional nutrition specialist suggesting users with perfectly balanced meals.
+          Respond in short and straight receipts.
+          Make sure to format your output messages in a readable way for example name of the day, name of the dish, 
+          ingredients first then receipt. Separate sections with the following
+          You always have to specify the type of dish that you have described in sentance like this:
+          
+            <h2 className='dishType'>Type: Dessert</h2> 
+            <h2 className="text-xl italic font-semibold">Ingredients:</h2>
+            <ul className="pl-5 list-disc"><li>vegetable broth and beef broth in place of chicken broth</li>
+            <li> green onions in place of carrots</li>
+            <li>potatoes in place of tomatoes</li>
+            <li>green onions in place of celery</li></ul>
+            
+            <h2 className="text-xl italic font-semibold">Process</h2>
+            <ul className="pl-5 list-decimal"><li>vegetable broth and beef broth in place of chicken broth</li>
+            <li> green onions in place of carrots</li>
+            <li>potatoes in place of tomatoes</li></ul>
 
-        <div>Chat GPT process here</div>`,
+            <div>Chat GPT process here</div>`,
       },
       {
         role: "user",

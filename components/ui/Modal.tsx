@@ -58,18 +58,16 @@ export default function Modal({
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
-                  <div className="sm:flex sm:items-start">
+                  <div className="w-full sm:flex sm:items-start">
                     {modalIcon}
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <div className="mt-3 w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
                         {modalTitle}
                       </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">{children}</p>
-                      </div>
+                      <div className="mt-2">{children}</div>
                     </div>
                   </div>
                   <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
