@@ -1,7 +1,7 @@
 import React from "react";
 
 function ChatHistoryPage() {
-  return <div>ChatHistoryPage</div>;
+  return <div className="h-screen">ChatHistoryPage</div>;
 }
 
 export default ChatHistoryPage;

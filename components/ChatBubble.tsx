@@ -62,7 +62,7 @@ function ChatBubble({
         <div className="chat-footer mt-2">
           {!receiptMutation.isSuccess ? (
             messageOwner === "Chat Bot" && isReceipt && !isGenerating ? (
-              <div className="flex flex-col space-y-2 text-sm sm:flex-row sm:space-x-2 sm:space-y-0">
+              <div className="flex flex-row space-x-2 text-sm ">
                 <Badge
                   variant={"success"}
                   className="cursor-pointer"

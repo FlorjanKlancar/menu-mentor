@@ -70,7 +70,7 @@ export default function Modal({
                       <div className="mt-2">{children}</div>
                     </div>
                   </div>
-                  <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                  <div className="mt-5 gap-2 sm:mt-4 sm:flex sm:flex-row-reverse">
                     {modalButton}
                     <button
                       type="button"

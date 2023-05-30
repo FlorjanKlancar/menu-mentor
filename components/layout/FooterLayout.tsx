@@ -12,9 +12,11 @@ function FooterLayout({ children, headerTitle, sideActionButton }: Props) {
   return (
     <>
       <main className="pb-8">
-        <div className="mb-4 flex items-center justify-between border-slate-400 border-opacity-30 sm:border-b-2">
-          <PageHeading headerTitle={headerTitle} />
-          {sideActionButton}
+        <div className="mb-4 flex flex-col items-center justify-between space-y-6 border-slate-400 border-opacity-30 sm:flex-row sm:space-y-0 sm:border-b-2">
+          <div className="w-full">
+            <PageHeading headerTitle={headerTitle} />
+          </div>
+          <div className="w-full sm:w-72">{sideActionButton}</div>
         </div>
         {children}
       </main>

@@ -132,7 +132,7 @@ function ReceiptsGrid() {
           <button
             type="button"
             onClick={() => removeHandler(selectedReceipt!.id)}
-            className="ml-1 mt-3 inline-flex w-full justify-center rounded-md bg-red-200 px-3 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50 sm:mt-0 sm:w-auto"
+            className="mt-3 inline-flex w-full justify-center rounded-md bg-red-200 px-3 py-2 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50 sm:mt-0 sm:w-auto"
           >
             Delete
           </button>

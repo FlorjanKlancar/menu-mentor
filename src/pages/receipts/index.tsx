@@ -16,10 +16,10 @@ function ReceiptsPage() {
         headerTitle={`Your Receipts ${String.fromCodePoint(127858)}`}
         sideActionButton={
           <button
-            className="btn-secondary btn"
+            className="btn-secondary btn w-full"
             onClick={() => router.push("/")}
           >
-            Add new Receipt
+            Generate new Receipt
           </button>
         }
       >

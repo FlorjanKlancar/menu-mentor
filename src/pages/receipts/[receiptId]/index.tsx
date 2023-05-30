@@ -70,13 +70,16 @@ function SpecificReceiptPage() {
       <FooterLayout
         headerTitle={receipt.title ?? formatDescription(receipt.receipt)!}
         sideActionButton={
-          <button className="btn-secondary btn" onClick={() => setOpen(true)}>
+          <button
+            className="btn-secondary btn w-full"
+            onClick={() => setOpen(true)}
+          >
             Edit Title <PencilSquareIcon className="ml-1 h-5 w-5" />
           </button>
         }
       >
-        <div className="h-screen">
-          <div className="grid grid-cols-2 items-center justify-items-center p-3">
+        <div className="sm:h-screen">
+          <div className="grid grid-cols-1 items-center justify-items-center gap-12 p-3 sm:grid-cols-2 sm:gap-8">
             <div className="space-y-16">
               <article className="flex max-w-xl flex-col items-start justify-between">
                 <div className="flex items-center gap-x-4 text-xs">
@@ -136,7 +139,7 @@ function SpecificReceiptPage() {
           modalButton={
             <button
               type="button"
-              className="ml-1 mt-3 inline-flex w-full justify-center rounded-md bg-green-200 px-3 py-2 text-sm font-semibold text-green-900 shadow-sm ring-1 ring-inset ring-green-300 hover:bg-green-50 sm:mt-0 sm:w-auto"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-green-200 px-3 py-2 text-sm font-semibold text-green-900 shadow-sm ring-1 ring-inset ring-green-300 hover:bg-green-50 sm:mt-0 sm:w-auto"
               onClick={updateReceiptHandler}
             >
               Save
@@ -146,7 +149,7 @@ function SpecificReceiptPage() {
           setOpen={setOpen}
           modalIcon={<PencilSquareIcon className="ml-1 h-5 w-5 text-primary" />}
         >
-          <div className="pt-2">
+          <div className="px-6 pt-2">
             <input
               type="text"
               placeholder="Receipt Title"

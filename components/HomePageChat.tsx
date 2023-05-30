@@ -120,7 +120,7 @@ function HomePageChat() {
       {!messages.length ? (
         <NoMessages />
       ) : (
-        <div className="max-h-[calc(100%-270px)] overflow-y-auto sm:h-[calc(100%-390px)]">
+        <div className="max-h-[calc(100%-210px)] overflow-y-auto sm:h-[calc(100%-355px)]">
           {messages.map((message, i) => (
             <ChatBubble
               {...message}
