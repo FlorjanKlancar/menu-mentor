@@ -3,7 +3,7 @@ import ChatBubble from "components/ChatBubble";
 import Footer from "components/Footer";
 import NoMessages from "components/placeholders/NoMessages";
 import TextPrompt from "components/TextPrompt";
-import { MessageType } from "types/MessageType";
+import type { MessageType } from "types/MessageType";
 import { useUser } from "@clerk/nextjs";
 import dayjs from "dayjs";
 
@@ -120,7 +120,7 @@ function HomePageChat() {
       {!messages.length ? (
         <NoMessages />
       ) : (
-        <div className="max-h-[calc(100%-210px)] overflow-y-auto sm:h-[calc(100%-355px)]">
+        <div className="max-h-[calc(100%-210px)] overflow-y-auto sm:h-[calc(100%-390px)]">
           {messages.map((message, i) => (
             <ChatBubble
               {...message}

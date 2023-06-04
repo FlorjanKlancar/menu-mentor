@@ -9,11 +9,22 @@ datasource db {
 }
 
 model Receipts {
-  id        String   @id @default(cuid())
-  receipt   String   @db.LongText
+  id        String           @id @default(cuid())
+  receipt   String           @db.LongText
   title     String?
   userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   type      String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  Images    ReceiptsImages[]
+}
+
+model ReceiptsImages {
+  id        String   @id @default(cuid())
+  imageUrl  String   @db.LongText
+  receipt   Receipts @relation(fields: [receiptId], references: [id])
+  receiptId String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  @@index([receiptId])
 }

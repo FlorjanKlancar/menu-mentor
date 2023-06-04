@@ -73,6 +73,7 @@ function ReceiptsGrid() {
                   fill
                   src={`https://api.dicebear.com/6.x/icons/jpg?seed=${receipt.id}`}
                   alt={"Icon Image"}
+                  sizes="(max-width: 640px) 100vw, 12rem"
                 />
               </div>
               <div className="h-12">

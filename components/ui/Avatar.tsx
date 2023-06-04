@@ -18,6 +18,7 @@ function Avatar({ messageOwner }: Props) {
         src={messageOwner !== "Chat Bot" ? user.profileImageUrl : "/avatar.jpg"}
         alt="User Img"
         fill
+        sizes="(max-width: 640px) 100vw, 12rem"
       />
     </div>
   );

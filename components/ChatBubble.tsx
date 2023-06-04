@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import BotTypingSpinner from "./BotTypingSpinner";
 import parse from "html-react-parser";
 import Avatar from "./ui/Avatar";
@@ -13,7 +13,10 @@ import toast from "react-hot-toast";
 import { Badge } from "./ui/Badge";
 
 interface Props extends MessageType {
-  generateAIResponse: (prompt: string) => void;
+  generateAIResponse: (
+    prompt: string,
+    generateAiResponseAgain?: string
+  ) => void;
   isGenerating: boolean;
 }
 
@@ -37,7 +40,7 @@ function ChatBubble({
 
   const rerollReceiptHandler = async () => {
     await generateAIResponse(
-      "I don&apos;t like the previous receipt. Make another one."
+      `I don&apos;t like this receipt: ${message}. Please make another one!`
     );
   };
 
@@ -93,4 +96,4 @@ function ChatBubble({
   );
 }
 
-export default ChatBubble;
+export default memo(ChatBubble);

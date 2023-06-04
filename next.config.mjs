@@ -19,7 +19,11 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["images.clerk.dev", "api.dicebear.com"],
+    domains: [
+      "images.clerk.dev",
+      "api.dicebear.com",
+      "oaidalleapiprodscus.blob.core.windows.net",
+    ],
   },
 };
 export default config;

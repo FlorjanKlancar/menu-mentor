@@ -39,7 +39,12 @@ function Navbar() {
 
       <div className="hidden space-x-2 lg:navbar-start lg:flex ">
         <div className="relative h-12 w-12">
-          <Image src={"/logo.png"} fill alt="Logo img" />
+          <Image
+            src={"/logo.png"}
+            fill
+            alt="Logo img"
+            sizes="(max-width: 640px) 100vw, 12rem"
+          />
         </div>
         <Link
           href="/"
@@ -51,7 +56,12 @@ function Navbar() {
 
       <div className="navbar-center lg:hidden">
         <div className="relative h-12 w-12">
-          <Image src={"/logo.png"} fill alt="Logo img" />
+          <Image
+            src={"/logo.png"}
+            fill
+            alt="Logo img"
+            sizes="(max-width: 640px) 100vw, 12rem"
+          />
         </div>
       </div>
 
@@ -99,9 +109,12 @@ function RenderMenuList() {
     },
   ];
 
-  const checkIfActivePath = (path: string) =>
-    path === router.asPath ? true : false;
+  const checkIfActivePath = (path: string) => {
+    const currentPath = router.pathname;
+    const regex = new RegExp(`^${path}(\/|$)`);
 
+    return regex.test(currentPath);
+  };
   return (
     <>
       {menu.map((item) => (

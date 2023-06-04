@@ -9,7 +9,7 @@ import React from "react";
 function ReceiptListSkeleton({ numberOfCards }: { numberOfCards: number }) {
   return (
     <>
-      {[...Array(numberOfCards)].map((i) => (
+      {[...Array(numberOfCards)].map((_, i) => (
         <li
           key={i}
           className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow-xl"

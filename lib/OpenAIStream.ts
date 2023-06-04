@@ -3,8 +3,9 @@ import {
   type ParsedEvent,
   type ReconnectInterval,
 } from "eventsource-parser";
+import { Configuration, OpenAIApi } from "openai";
 
-export type ChatGPTAgent = "user" | "system";
+export type ChatGPTAgent = "user" | "system" | "assistant";
 
 export interface ChatGPTMessage {
   role: ChatGPTAgent;
@@ -22,6 +23,10 @@ export interface OpenAIStreamPayload {
   stream: boolean;
   n: number;
 }
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 async function* streamIterator(stream: ReadableStream<Uint8Array>) {
   const decoder = new TextDecoder();
@@ -103,3 +108,5 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
     console.error(e);
   }
 }
+
+export const openaiApi = new OpenAIApi(configuration);

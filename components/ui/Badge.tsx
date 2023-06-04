@@ -13,6 +13,8 @@ const badgeVariants = cva(
           "ring-green-600/20 bg-green-100 text-green-700 hover:bg-green-200/80",
         alert: "ring-red-600/20 bg-red-100 text-red-700 hover:bg-red-200/80",
         greenOutline: "ring-green-600/20 bg-green-300 text-green-700",
+        suggestion:
+          "ring-secondary/50 text-secondary cursor-pointer hover:bg-secondary/20",
       },
     },
     defaultVariants: {

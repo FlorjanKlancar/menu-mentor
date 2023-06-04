@@ -10,20 +10,22 @@ import Image from "next/image";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import Modal from "components/ui/Modal";
 import { toast } from "react-hot-toast";
+import ReceiptSkeleton from "components/skeletons/ReceiptSkeleton";
+import ImageGallery from "components/ImageGallery";
 
 function SpecificReceiptPage() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [receiptTitle, setReceiptTitle] = useState("");
   const utils = api.useContext();
+  const updateReceipt = api.receipt.updateReceipt.useMutation();
+  const generateImage = api.receipt.generateReceiptImage.useMutation();
 
   const { receiptId } = router.query;
 
-  if (!receiptId) return;
-
   const { data: receipt, isLoading } = api.receipt.getReceiptById.useQuery(
     {
-      receiptId: receiptId.toString(),
+      receiptId: receiptId?.toString() ?? "",
     },
     {
       enabled: !!receiptId,
@@ -32,15 +34,23 @@ function SpecificReceiptPage() {
       },
     }
   );
-  const updateReceipt = api.receipt.updateReceipt.useMutation();
+  const { data: dataImages, isLoading: isLoadingImages } =
+    api.receipt.getReceiptImages.useQuery(
+      {
+        receiptId: receiptId?.toString() ?? "",
+      },
+      {
+        enabled: !!receiptId,
+      }
+    );
 
-  if (!receipt || isLoading) return <div>loading</div>;
+  if (!receipt || isLoading || isLoadingImages) return <ReceiptSkeleton />;
 
   const updateReceiptHandler = async () => {
     setOpen(false);
 
     try {
-      await updateReceipt.mutate(
+      updateReceipt.mutate(
         {
           receiptId: receipt.id,
           receiptTitle,
@@ -61,21 +71,50 @@ function SpecificReceiptPage() {
     }
   };
 
+  const generateImageHandler = () => {
+    try {
+      generateImage.mutate({
+        receiptId: receipt.id,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const invalidateImagesQuery = async () =>
+    await utils.receipt.getReceiptImages.invalidate();
+
+  if (generateImage.isSuccess) {
+    invalidateImagesQuery();
+  }
   return (
     <>
       <Head>
         <title>Receipts - Menu Mentor</title>
       </Head>
-
       <FooterLayout
         headerTitle={receipt.title ?? formatDescription(receipt.receipt)!}
         sideActionButton={
-          <button
-            className="btn-secondary btn w-full"
-            onClick={() => setOpen(true)}
-          >
-            Edit Title <PencilSquareIcon className="ml-1 h-5 w-5" />
-          </button>
+          <div className="flex w-full flex-col space-y-2 sm:justify-end md:flex-row md:space-x-3 md:space-y-0">
+            {!dataImages?.length ? (
+              <button
+                className={`${
+                  !generateImage.isLoading
+                    ? "btn-outline btn-primary"
+                    : "btn-disabled loading"
+                }  btn`}
+                onClick={generateImageHandler}
+              >
+                {generateImage.isLoading ? "Generating" : "Generate AI Images"}
+              </button>
+            ) : null}
+            <button
+              className="btn-secondary btn w-full md:w-44"
+              onClick={() => setOpen(true)}
+            >
+              Edit Title <PencilSquareIcon className="ml-1 h-5 w-5" />
+            </button>
+          </div>
         }
       >
         <div className="sm:h-screen">
@@ -99,9 +138,9 @@ function SpecificReceiptPage() {
                   <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900">
                     {receipt.title ?? formatDescription(receipt.receipt)!}
                   </h3>
-                  <p className="mt-5 text-sm leading-6 text-black">
+                  <div className="mt-5 text-sm leading-6 text-black">
                     {parse(receipt.receipt)}
-                  </p>
+                  </div>
                 </div>
                 <div className="relative mt-8 flex items-center gap-x-4">
                   <div className="relative h-10 w-10">
@@ -110,6 +149,7 @@ function SpecificReceiptPage() {
                       alt="Avatar"
                       fill
                       className="rounded-full bg-gray-50"
+                      sizes="(max-width: 640px) 100vw, 12rem"
                     />
                   </div>
                   <div className="text-sm leading-6">
@@ -123,14 +163,10 @@ function SpecificReceiptPage() {
               </article>
             </div>
 
-            <div className="relative h-32 w-32">
-              <Image
-                className="rounded-full"
-                fill
-                src={`https://api.dicebear.com/6.x/icons/jpg?seed=${receipt.id}`}
-                alt={"Icon Image"}
-              />
-            </div>
+            <ImageGallery
+              receiptId={receipt.id}
+              isGenerating={generateImage.isLoading}
+            />
           </div>
         </div>
 
@@ -138,8 +174,8 @@ function SpecificReceiptPage() {
           modalTitle="Edit Receipt Name"
           modalButton={
             <button
-              type="button"
               className="mt-3 inline-flex w-full justify-center rounded-md bg-green-200 px-3 py-2 text-sm font-semibold text-green-900 shadow-sm ring-1 ring-inset ring-green-300 hover:bg-green-50 sm:mt-0 sm:w-auto"
+              type="submit"
               onClick={updateReceiptHandler}
             >
               Save
