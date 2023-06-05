@@ -1,5 +1,14 @@
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import React, { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  ArrowDownCircleIcon,
+  ArrowDownIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/outline";
+import React, {
+  type Dispatch,
+  type SetStateAction,
+  useState,
+  useEffect,
+} from "react";
 import { type MessageType } from "types/MessageType";
 import Suggestions from "./Suggestions";
 
@@ -12,6 +21,8 @@ type Props = {
 
 function TextPrompt({ generateAIResponse, loading }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [arrowRotation, setArrowRotation] = useState(0);
 
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -19,8 +30,14 @@ function TextPrompt({ generateAIResponse, loading }: Props) {
     if (!searchQuery.length) return;
 
     setSearchQuery("");
-
+    setShowSuggestions(false);
+    setArrowRotation(180);
     generateAIResponse(searchQuery);
+  };
+
+  const toggleSuggestions = () => {
+    setShowSuggestions(!showSuggestions);
+    setArrowRotation(showSuggestions ? 180 : 0);
   };
 
   return (
@@ -33,14 +50,23 @@ function TextPrompt({ generateAIResponse, loading }: Props) {
           <h3 className="text-sm font-semibold leading-6 text-gray-900 sm:text-base">
             Ask your assistant for the menu
           </h3>
+          <ArrowDownCircleIcon
+            className={`h-7 w-7 transform cursor-pointer text-secondary transition-transform duration-300 ${
+              showSuggestions ? "rotate-180" : ""
+            }`}
+            style={{ transform: `rotate(${arrowRotation}deg)` }}
+            onClick={toggleSuggestions}
+          />
         </div>
 
-        <Suggestions loading={loading} setSearchQuery={setSearchQuery} />
+        <div hidden={!showSuggestions}>
+          <Suggestions setSearchQuery={setSearchQuery} />
+        </div>
 
         <div className="flex items-center space-x-2 sm:flex-col sm:space-x-0">
           <textarea
             className="textarea-primary textarea w-full"
-            placeholder="Write me an all rounded meal plan for Friday including chicken and lettuce."
+            placeholder="Write me an all-rounded meal plan for Friday including chicken and lettuce."
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
           ></textarea>

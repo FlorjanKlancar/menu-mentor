@@ -1,4 +1,4 @@
-import { SignUp } from "@clerk/nextjs";
+import { ClerkLoading, SignUp } from "@clerk/nextjs";
 import Footer from "components/Footer";
 
 const SignInPage = () => (
@@ -30,7 +30,23 @@ const SignInPage = () => (
           </div>
         </div>
       </div>
-      <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
+      <div>
+        <ClerkLoading>
+          <div className="skeleton w-42 h-96 sm:h-[454px] sm:w-[350px]" />
+        </ClerkLoading>
+        <SignUp
+          path="/sign-up"
+          appearance={{
+            elements: {
+              card: {
+                width: "350px",
+              },
+            },
+          }}
+          routing="path"
+          signInUrl="/sign-in"
+        />
+      </div>
     </div>
     <div className="fixed bottom-0 left-0 right-0">
       <Footer />
