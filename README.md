@@ -1,28 +1,54 @@
-# Create T3 App
+<div id="top"></div>
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+<h3 align="center">Menu Mentor</h3>
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+<h3>Vercel Deploy: https://menu-mentor.vercel.app/</h3>
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#information">Information</a></li>
+  </ol>
+</details>
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
 
-## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Built With
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+* [Next.js](https://nextjs.org/)
+* [Typescript](https://www.typescriptlang.org/)
+* [React.js](https://reactjs.org/)
+* [Tailwind CSS](https://tailwindcss.com/)
+* [OpenAI](https://openai.com/)
 
-## How do I deploy this?
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+
+## Information
+Menu mentor is an AI chat assistant to suggest you with your meals. I've also added AI image generating for meals which are not that great looking but I wanted to see how it works :)
+
+![image](https://github.com/FlorjanKlancar/menu-mentor/assets/48727773/1962a0ec-9e68-416e-a797-be949f893451)
+![image](https://github.com/FlorjanKlancar/menu-mentor/assets/48727773/5b39a3d6-319f-4861-8545-c3445eb84ec9)
+![image](https://github.com/FlorjanKlancar/menu-mentor/assets/48727773/16c3afe7-6680-4ff4-961a-a130c21e883d)
+
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
