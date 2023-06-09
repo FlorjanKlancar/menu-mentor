@@ -1,14 +1,8 @@
 import {
   ArrowDownCircleIcon,
-  ArrowDownIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import React, {
-  type Dispatch,
-  type SetStateAction,
-  useState,
-  useEffect,
-} from "react";
+import React, { type Dispatch, type SetStateAction, useState } from "react";
 import { type MessageType } from "types/MessageType";
 import Suggestions from "./Suggestions";
 

@@ -43,7 +43,7 @@ function Suggestions({ setSearchQuery }: Props) {
         className={`  flex max-w-4xl flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0`}
       >
         {filteredSuggestions?.map((suggestion) => (
-          <div>
+          <div key={suggestion.index}>
             <Badge
               key={suggestion.index}
               variant={"suggestion"}
